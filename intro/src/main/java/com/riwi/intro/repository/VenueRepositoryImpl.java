@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class Venues {
+public class VenueRepositoryImpl {
     private final List<Venue> venues = new ArrayList<>();
 
     public List<Venue> findAll(){
@@ -34,5 +34,11 @@ public class Venues {
         int index = venues.indexOf(deleted);
         Venue remove = venues.remove(index);
         return deleted;
+    }
+
+    public Venue update(Venue venue){
+        Venue updated= findById(venue.getId());
+        venue.setName(updated.getName());
+        return updated;
     }
 }
