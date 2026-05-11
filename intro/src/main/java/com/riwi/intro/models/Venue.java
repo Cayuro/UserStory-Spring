@@ -17,5 +17,9 @@ public class Venue {
     @Schema(description="The name of the venue",example="Nombre Generico")
     private String name;
 
+    @Schema(description = "the location, adress", example="cll 60 # 75 - 100")
+    private String direction;
 
+    @Schema(description="capacity of the place", example="18")
+    private int Capacity;
 }
