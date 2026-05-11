@@ -1,25 +1,36 @@
 package com.riwi.intro.models;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Tag(name="Venue")
+
+@Entity
+@Table(name="venues")
+
+@Schema(name = "Venue", description = "Entity representing an event venue")
 public class Venue {
-    @Schema(description="This is the id of the venue", example="123")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(description="This is the  o the venue", example="123")
     private int id;
 
+    @Column(nullable = false,length = 100)
     @Schema(description="The name of the venue",example="Nombre Generico")
     private String name;
 
+    @Column(nullable = false,length = 150)
     @Schema(description = "the location, adress", example="cll 60 # 75 - 100")
-    private String direction;
+    private String address;
 
-    @Schema(description="capacity of the place", example="18")
+    @Column(nullable = false)
+    @Schema(description="capacity of the place", example="100")
     private int Capacity;
 }

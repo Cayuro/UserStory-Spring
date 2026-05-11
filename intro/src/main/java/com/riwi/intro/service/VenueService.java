@@ -8,7 +8,7 @@ import java.util.List;
 
 @Service
 public class VenueService {
-    VenueRepositoryImpl repository;
+    private final VenueRepositoryImpl repository;
 
     public VenueService(VenueRepositoryImpl repository) {
         this.repository = repository;

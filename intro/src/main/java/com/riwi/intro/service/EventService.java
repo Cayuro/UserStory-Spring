@@ -8,7 +8,7 @@ import java.util.List;
 
 @Service
 public class EventService {
-    EventRepositoryImpl repository;
+    private final EventRepositoryImpl repository;
 
     public EventService(EventRepositoryImpl repository) {
         this.repository = repository;
