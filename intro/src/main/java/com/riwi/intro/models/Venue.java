@@ -20,7 +20,7 @@ public class Venue {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Schema(description="This is the  o the venue", example="123")
-    private int id;
+    private Integer id;
 
     @Column(nullable = false,length = 100)
     @Schema(description="The name of the venue",example="Nombre Generico")
@@ -32,5 +32,5 @@ public class Venue {
 
     @Column(nullable = false)
     @Schema(description="capacity of the place", example="100")
-    private int Capacity;
+    private int capacity;
 }
