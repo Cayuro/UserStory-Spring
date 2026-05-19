@@ -1,3 +1,8 @@
+# Variables de entorno en properties
+/home/cohorte6/Desktop/UserStory-Spring/intro/src/main/resources/application.properties
+*.properties
+
+
 HELP.md
 target/
 .mvn/wrapper/maven-wrapper.jar
