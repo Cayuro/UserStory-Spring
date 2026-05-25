@@ -17,14 +17,14 @@ import lombok.NoArgsConstructor;
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 100)
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 20)
     private String date;
 
-    @Column(nullable = false,length = 100)
+    @Column(nullable = false, length = 500)
     private String description;
 }
