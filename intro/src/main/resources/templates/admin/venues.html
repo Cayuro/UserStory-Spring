@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Venues - Admin</title>
+    <style>table, th, td { border: 1px solid #ccc; border-collapse: collapse; padding:6px; }</style>
+</head>
+<body>
+<h1>Venues</h1>
+<a th:href="@{/admin/venues/new}">Crear venue</a>
+
+<div th:if="${venues.size()} &gt; 0">
+    <table>
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Dirección</th>
+            <th>Capacidad</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="v : ${venues}">
+            <td th:text="${v.id}">1</td>
+            <td th:text="${v.name}">Nombre</td>
+            <td th:text="${v.address}">Dirección</td>
+            <td th:text="${v.capacity}">100</td>
+            <td>
+                <a th:href="@{|/admin/venues/${v.id}/edit|}">Editar</a>
+                |
+                <a th:href="@{|/admin/venues/${v.id}/delete|}">Borrar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<p th:if="${venues.size()} == 0">Actualmente no hay eventos programados</p>
+
+</body>
+</html>
