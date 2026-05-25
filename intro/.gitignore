@@ -1,3 +1,17 @@
+# Variables de entorno en properties
+/home/cohorte6/Desktop/UserStory-Spring/intro/src/main/resources/application.properties
+*.properties
+
+# Tokens
+token.md
+intro/token.md
+
+# ignorar archivos de configuración de Spring Boot
+application.properties
+application.yml
+src/main/resources/application.properties
+intro/src/main/resources/application.properties
+
 HELP.md
 target/
 .mvn/wrapper/maven-wrapper.jar
