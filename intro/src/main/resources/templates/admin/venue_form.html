@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Venue Form</title>
+</head>
+<body>
+<h1 th:if="${venue.id} == null">Crear Venue</h1>
+<h1 th:unless="${venue.id} == null">Editar Venue</h1>
+
+<form th:action="@{/admin/venues}" th:object="${venue}" method="post">
+    <input type="hidden" th:field="*{id}" />
+    <div>
+        <label>Nombre: <input type="text" th:field="*{name}" /></label>
+    </div>
+    <div>
+        <label>Dirección: <input type="text" th:field="*{address}" /></label>
+    </div>
+    <div>
+        <label>Capacidad: <input type="number" th:field="*{capacity}" /></label>
+    </div>
+    <div>
+        <button type="submit">Guardar</button>
+    </div>
+</form>
+
+<a th:href="@{/admin/venues}">Volver</a>
+
+</body>
+</html>
