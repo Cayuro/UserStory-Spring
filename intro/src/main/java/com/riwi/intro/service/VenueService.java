@@ -3,8 +3,8 @@ package com.riwi.intro.service;
 import com.riwi.intro.exception.ResourceNotFoundException;
 import com.riwi.intro.models.Venue;
 import com.riwi.intro.repository.VenueRepository;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,7 +24,7 @@ public class VenueService {
                 .orElseThrow(() -> new ResourceNotFoundException("Venue with id " + id + " was not found"));
     }
 
-    public Page<Venue> findAll(String name, Pageable pageable) {
+    public Slice<Venue> findAll(String name, Pageable pageable) {
         if (name == null || name.isBlank()) {
             return repository.findAll(pageable);
         }

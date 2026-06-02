@@ -9,21 +9,33 @@
 <h1>Eventos</h1>
 <a th:href="@{/admin/events/new}">Crear evento</a>
 
-<div th:if="${events.size()} &gt; 0">
+<form th:action="@{/admin/events}" method="get" style="margin: 16px 0;">
+    <input type="text" name="name" placeholder="Nombre" th:value="${name}" />
+    <input type="text" name="city" placeholder="Ciudad" th:value="${city}" />
+    <input type="text" name="category" placeholder="Categoría" th:value="${category}" />
+    <input type="number" name="capacity" placeholder="Capacidad mínima" th:value="${capacity}" />
+    <input type="date" name="dateFrom" th:value="${dateFrom}" />
+    <input type="date" name="dateTo" th:value="${dateTo}" />
+    <button type="submit">Buscar</button>
+</form>
+
+<div th:if="${events.content.size()} &gt; 0">
     <table>
         <thead>
         <tr>
-            <th>Id</th>
-            <th>Nombre</th>
+            <th>Evento</th>
             <th>Fecha</th>
+            <th>Venue</th>
+            <th>Ciudad</th>
             <th>Acciones</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="e : ${events}">
-            <td th:text="${e.id}">1</td>
-            <td th:text="${e.name}">Nombre</td>
+        <tr th:each="e : ${events.content}">
+            <td th:text="${e.eventName}">Nombre</td>
             <td th:text="${e.date}">2026-01-01</td>
+            <td th:text="${e.venueName}">Venue</td>
+            <td th:text="${e.city}">Ciudad</td>
             <td>
                 <a th:href="@{|/admin/events/${e.id}/edit|}">Editar</a>
                 |
@@ -34,7 +46,19 @@
     </table>
 </div>
 
-<p th:if="${events.size()} == 0">Actualmente no hay eventos programados</p>
+<p th:if="${events.content.size()} == 0">Actualmente no hay eventos programados</p>
+
+<div style="margin-top: 16px;">
+    <a th:if="${events.hasPrevious()}"
+       th:href="@{/admin/events(page=${events.number - 1}, size=${events.size},
+            name=${name}, city=${city}, category=${category}, capacity=${capacity},
+            dateFrom=${dateFrom}, dateTo=${dateTo})}">Anterior</a>
+    <span th:if="${events.hasPrevious()}"> | </span>
+    <a th:if="${events.hasNext()}"
+       th:href="@{/admin/events(page=${events.number + 1}, size=${events.size},
+            name=${name}, city=${city}, category=${category}, capacity=${capacity},
+            dateFrom=${dateFrom}, dateTo=${dateTo})}">Siguiente</a>
+</div>
 
 </body>
 </html>

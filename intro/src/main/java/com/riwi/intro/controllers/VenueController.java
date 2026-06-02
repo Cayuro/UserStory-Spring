@@ -7,8 +7,8 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springdoc.core.annotations.ParameterObject;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +23,7 @@ public class VenueController {
 
     @GetMapping
     @Operation(summary = "List venues with pagination and sorting")
-    public Page<Venue> getVenues(
+    public Slice<Venue> getVenues(
             @Parameter(description = "Optional name filter using a derived query")
             @RequestParam(required = false) String name,
             @ParameterObject Pageable pageable) {

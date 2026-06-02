@@ -1,5 +1,6 @@
 package com.riwi.intro.controllers;
 
+import com.riwi.intro.dto.EventSummaryDTO;
 import com.riwi.intro.models.Event;
 import com.riwi.intro.service.EventService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -7,8 +8,8 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springdoc.core.annotations.ParameterObject;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,12 +23,25 @@ public class EventController {
     }
 
     @GetMapping
-    @Operation(summary = "List events with pagination and sorting")
-    public Page<Event> getEvents(
-            @Parameter(description = "Optional name filter using a derived query")
+    @Operation(
+            summary = "List events with optimized projection",
+            description = "Returns only active events. Soft-deleted rows are hidden by Hibernate SQL restrictions."
+    )
+    public Slice<EventSummaryDTO> getEvents(
+            @Parameter(description = "Optional name filter, case insensitive and partial")
             @RequestParam(required = false) String name,
+            @Parameter(description = "Optional city filter, case insensitive and partial")
+            @RequestParam(required = false) String city,
+            @Parameter(description = "Optional category filter, case insensitive and partial")
+            @RequestParam(required = false) String category,
+            @Parameter(description = "Optional minimum capacity filter")
+            @RequestParam(required = false) Integer capacity,
+            @Parameter(description = "Optional start date in ISO format")
+            @RequestParam(required = false) String dateFrom,
+            @Parameter(description = "Optional end date in ISO format")
+            @RequestParam(required = false) String dateTo,
             @ParameterObject Pageable pageable) {
-        return service.findAll(name, pageable);
+        return service.findAll(name, city, category, capacity, dateFrom, dateTo, pageable);
     }
 
     @GetMapping("/{id}")

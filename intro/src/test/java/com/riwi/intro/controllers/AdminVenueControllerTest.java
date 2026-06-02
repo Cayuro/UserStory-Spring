@@ -39,10 +39,9 @@ public class AdminVenueControllerTest {
     public void listEmpty_showsMessage() throws Exception {
         when(service.findAll(null, any(Pageable.class))).thenReturn(new PageImpl<>(List.of()));
 
-        mockMvc.perform(get("/templates/admin/venues"))
+        mockMvc.perform(get("/admin/venues"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("templates/admin/venues"))
-                .andExpect(model().attributeExists("venues"))
-                .andExpect(model().attribute("venues", List.of()));
+                .andExpect(view().name("admin/venues"))
+                .andExpect(model().attributeExists("venues"));
     }
 }

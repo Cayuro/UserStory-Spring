@@ -1,7 +1,9 @@
 package com.riwi.intro.repository;
 
 import com.riwi.intro.IntroApplication;
+import com.riwi.intro.models.Category;
 import com.riwi.intro.models.Event;
+import com.riwi.intro.models.Venue;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -11,22 +13,45 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import java.util.Set;
 
-@DataJpaTest
+@DataJpaTest(properties = "spring.flyway.enabled=false")
 @ContextConfiguration(classes = IntroApplication.class)
 class EventRepositoryTest {
 
     @Autowired
     private EventRepository eventRepository;
 
+    @Autowired
+    private VenueRepository venueRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
+
+    private Venue cachedVenue;
+    private Category cachedCategory;
+
+    private Event createEvent(String name, String date, String description) {
+        if (cachedVenue == null) {
+            cachedVenue = venueRepository.save(new Venue(null, "Main Hall", "Street 10", "Bogotá", 250));
+        }
+        if (cachedCategory == null) {
+            cachedCategory = categoryRepository.save(new Category(null, "Tech", "Tech event"));
+        }
+
+        Event event = new Event(null, name, date, description);
+        event.setVenue(cachedVenue);
+        event.setCategories(Set.of(cachedCategory));
+        return eventRepository.save(event);
+    }
+
     @Test
     void savesAndFindsEventById() {
-        Event savedEvent = eventRepository.save(new Event(
-                null,
+        Event savedEvent = createEvent(
                 "Spring Conf",
                 "2026-06-10",
                 "Conference for Spring developers"
-        ));
+        );
 
         assertThat(eventRepository.findById(savedEvent.getId()))
                 .isPresent()
@@ -37,8 +62,8 @@ class EventRepositoryTest {
 
     @Test
     void findsEventsByNameContainingIgnoringCase() {
-        eventRepository.save(new Event(null, "Java Summit", "2026-07-01", "Backend event"));
-        eventRepository.save(new Event(null, "Frontend Meetup", "2026-07-02", "Frontend event"));
+        createEvent("Java Summit", "2026-07-01", "Backend event");
+        createEvent("Frontend Meetup", "2026-07-02", "Frontend event");
 
         Page<Event> result = eventRepository.findByNameContainingIgnoreCase(
                 "java",
@@ -53,12 +78,11 @@ class EventRepositoryTest {
     @Test
     void returnsRequestedPageWithPaginationMetadata() {
         for (int i = 1; i <= 50; i++) {
-            eventRepository.save(new Event(
-                    null,
+            createEvent(
                     String.format("Event %02d", i),
                     "2026-08-01",
                     "Generated event for pagination test"
-            ));
+            );
         }
 
         Page<Event> page = eventRepository.findAll(PageRequest.of(0, 5, Sort.by("name").ascending()));

@@ -20,6 +20,21 @@
         <label>Descripción: <textarea th:field="*{description}"></textarea></label>
     </div>
     <div>
+        <label>Venue:
+            <select th:field="*{venueId}">
+                <option value="">-- Selecciona un venue --</option>
+                <option th:each="venue : ${venues}" th:value="${venue.id}" th:text="${venue.name + ' - ' + venue.city}"></option>
+            </select>
+        </label>
+    </div>
+    <div>
+        <label>Categorías:
+            <select th:field="*{categoryIds}" multiple="multiple" size="5">
+                <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+            </select>
+        </label>
+    </div>
+    <div>
         <button type="submit">Guardar</button>
     </div>
 </form>

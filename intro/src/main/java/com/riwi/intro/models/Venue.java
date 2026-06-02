@@ -30,7 +30,15 @@ public class Venue {
     @Schema(description = "the location, adress", example="cll 60 # 75 - 100")
     private String address;
 
+    @Column(nullable = false, length = 120)
+    @Schema(description = "City where the venue is located", example = "Bogotá")
+    private String city;
+
     @Column(nullable = false)
     @Schema(description="capacity of the place", example="100")
     private int capacity;
+
+    public Venue(Integer id, String name, String address, int capacity) {
+        this(id, name, address, "Bogotá", capacity);
+    }
 }

@@ -39,10 +39,9 @@ public class AdminEventControllerTest {
     public void listEmpty_showsMessage() throws Exception {
         when(service.findAll(null, any(Pageable.class))).thenReturn(new PageImpl<>(List.of()));
 
-        mockMvc.perform(get("/templates/admin/events"))
+        mockMvc.perform(get("/admin/events"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("templates/admin/events"))
-                .andExpect(model().attributeExists("events"))
-                .andExpect(model().attribute("events", List.of()));
+                .andExpect(view().name("admin/events"))
+                .andExpect(model().attributeExists("events"));
     }
 }

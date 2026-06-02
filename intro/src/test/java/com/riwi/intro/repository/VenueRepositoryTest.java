@@ -12,7 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DataJpaTest
+@DataJpaTest(properties = "spring.flyway.enabled=false")
 @ContextConfiguration(classes = IntroApplication.class)
 class VenueRepositoryTest {
 
@@ -21,7 +21,7 @@ class VenueRepositoryTest {
 
     @Test
     void savesAndFindsVenueById() {
-        Venue savedVenue = venueRepository.save(new Venue(null, "Main Hall", "Street 10", 250));
+        Venue savedVenue = venueRepository.save(new Venue(null, "Main Hall", "Street 10", "Bogotá", 250));
 
         assertThat(venueRepository.findById(savedVenue.getId()))
                 .isPresent()
@@ -32,8 +32,8 @@ class VenueRepositoryTest {
 
     @Test
     void findsVenuesByNameContainingIgnoringCase() {
-        venueRepository.save(new Venue(null, "Central Theater", "Avenue 1", 500));
-        venueRepository.save(new Venue(null, "Open Plaza", "Avenue 2", 1000));
+        venueRepository.save(new Venue(null, "Central Theater", "Avenue 1", "Bogotá", 500));
+        venueRepository.save(new Venue(null, "Open Plaza", "Avenue 2", "Medellín", 1000));
 
         Page<Venue> result = venueRepository.findByNameContainingIgnoreCase(
                 "theater",
